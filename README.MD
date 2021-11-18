@@ -11,7 +11,6 @@ visualization obtained by reducing the results to two dimensions using t-SNE.
 
 This app was built with Plotly and Dash. For more details, see the [documentation](https://plotly.com/).
 
-### Screenshot
 ![screenshot.png](screenshot.png)
 
 ### Dependencies
