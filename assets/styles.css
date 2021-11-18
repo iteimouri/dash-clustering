@@ -1,0 +1,108 @@
+/* General */
+body {
+    background-color: white;
+    color: #212121;
+    font-family: "Open Sans";
+    font-size: 0.8vw;
+    width: 100vw;
+    height: 100vh;
+    max-width: 100% !important;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+} 
+
+html {
+    color: #212121;
+    font-size: 0.85vw;
+    overflow-x: hidden;  
+}
+
+a {
+    color: #5D69B1;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* Tooltip */
+.custom-tooltip-icon{
+    margin: 1vw 0.25vw 0.25vw 0vw;
+    display: inline-block;
+    vertical-align: middle;
+    width: 0.8vw;
+    height: 0.8vw;
+    line-height: 0.8vw;
+    font-size: 0.6vw;
+    font-weight: bold;
+    color: white;
+    background-color: #5D69B1;
+    border-radius: 50%;
+    text-align: center;
+}
+
+/* Upload */
+.custom-upload{
+    border: 0.125em dashed #D9D9D9;
+    border-radius: 5px;
+    height: 2vw;
+    line-height: 2vw;
+    width: 80%;
+    text-align: center;
+}
+
+.custom-upload::after{
+    border: 0.125em dashed #D9D9D9;
+    border-radius: 5px;
+    height: 2vw;
+    line-height: 2vw;
+    width: 80%;
+    text-align: center;
+}
+
+/* Label */
+.custom-label{
+    margin: 1vw 0.25vw 0.25vw 0vw;
+    display: inline-block;
+    vertical-align: middle;
+    color: #5D69B1 !important;
+}
+
+/* Inputs */
+.custom-numeric-input{
+    height: 2vw;
+    width: 10vw;
+    font-size: 90%;
+    display: block;
+}
+
+.custom-select-input{
+    height: 0.65vw !important;
+    width: 0.65vw !important;
+}
+
+.custom-select-label{
+    color: #212121;
+    font-size: 90%;
+}
+
+input[type="radio" i]{
+    margin: 0vw 0.15vw 0vw 0vw !important;
+    padding: 0 !important;
+    font-family: inherit;
+    font-size: 90%;
+}
+
+input[type="email"], input[type="number"], input[type="search"], input[type="text"],
+input[type="tel"], input[type="url"], input[type="password"], textarea, select {
+    height: 2vw;
+    padding: 6px 10px;
+    background-color: white;
+    color: #666666;
+    border: 0.1vw solid #D9D9D9;
+    border-radius: 0.5rem;
+    box-shadow: none;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: 90%;
+}
+
