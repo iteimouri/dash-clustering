@@ -4,6 +4,8 @@ This app performs k-means clustering using `scikit-learn`. The user can upload t
 The input file should contain the index in the first column and the features in the subsequent columns, with the
 corresponding column headers. Any missing values are automatically removed by the app.
 
+<br>
+
 ![screenshot.png](screenshot.png)
 
 The app allows the user to scale the data as well as to decompose the data using Principal Component Analysis (PCA)
