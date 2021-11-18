@@ -4,16 +4,14 @@ This app performs k-means clustering using `scikit-learn`. The user can upload t
 The input file should contain the index in the first column and the features in the subsequent columns, with the
 corresponding column headers. Any missing values are automatically removed by the app.
 
+![screenshot.png](screenshot.png)
+
 The app allows the user to scale the data as well as to decompose the data using Principal Component Analysis (PCA)
 prior to applying the clustering algorithm. The app includes a table with a number of clustering performance metrics,
 a table with the cluster labels of the raw data, a table with the descriptive statistics of the raw data, and a cluster
 visualization obtained by reducing the results to two dimensions using t-SNE.
 
 This app was built with Plotly and Dash. For more details, see the [documentation](https://plotly.com/).
-
-<br>
-
-![screenshot.png](screenshot.png)
 
 ### Dependencies
 ```bash
