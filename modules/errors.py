@@ -19,6 +19,26 @@ data_error_message = html.Div(
     }
 )
 
+upload_error_message = html.Div(
+    children=[
+        html.Span(
+            children='Error: ',
+            style={
+                'font-weight': 'bold',
+                'white-space': 'pre',
+                'color': '#8d8d8d'
+            }
+        ),
+        'The input file should contain the index in the first column and the features in the subsequent columns, '
+        'with the corresponding column headers. The accepted file formats are CSV, XLS, XLSX, and TXT.'
+    ], style={
+        'color': '#9d9d9d',
+        'font-size': '90%',
+        'width': '25vw',
+        'padding': '2vw 0vw 0vw 0vw'
+    }
+)
+
 pca_error_message = html.Div(
     children=[
         html.Span(

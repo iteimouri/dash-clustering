@@ -18,7 +18,7 @@ from flask import Flask
 pd.options.mode.chained_assignment = None
 warnings.filterwarnings('ignore')
 
-from modules.errors import data_error_message, pca_error_message, batch_error_message, cluster_error_message
+from modules.errors import *
 from modules.tables import table
 from modules.utils import palette
 
@@ -179,7 +179,7 @@ app.layout = html.Div(children=[
                     'background-color': '#5D69B1',
                     'border-radius': '5px',
                     'padding': '0.25vw 0.25vw 0.25vw 0.25vw',
-                    'height': '1.6vw',
+                    'height': '1.4vw',
                     'width': '16vw',
                 }
             ),
@@ -232,7 +232,7 @@ app.layout = html.Div(children=[
                     'background-color': '#5D69B1',
                     'border-radius': '5px',
                     'padding': '0.25vw 0.25vw 0.25vw 0.25vw',
-                    'height': '1.6vw',
+                    'height': '1.4vw',
                     'width': '16vw',
                 }
             ),
@@ -284,7 +284,7 @@ app.layout = html.Div(children=[
                     'background-color': '#5D69B1',
                     'border-radius': '5px',
                     'padding': '0.25vw 0.25vw 0.25vw 0.25vw',
-                    'height': '1.6vw',
+                    'height': '1.4vw',
                     'width': '16vw',
                 }
             ),
@@ -380,7 +380,7 @@ app.layout = html.Div(children=[
                     'background-color': '#5D69B1',
                     'border-radius': '5px',
                     'padding': '0.25vw 0.25vw 0.25vw 0.25vw',
-                    'height': '1.6vw',
+                    'height': '1.4vw',
                     'width': '16vw',
                 }
             ),
@@ -417,7 +417,7 @@ app.layout = html.Div(children=[
                     'background-color': '#5D69B1',
                     'border-radius': '5px',
                     'padding': '0.25vw 0.25vw 0.25vw 0.25vw',
-                    'height': '1.6vw',
+                    'height': '1.4vw',
                     'width': '16vw',
                 }
             ),
@@ -476,213 +476,227 @@ def update_results(sample_data,
                    mini_batch,
                    batch_size):
 
-    # Load the data.
-    if sample_data == ['true']:
-        df = pd.read_csv('data/sample_data.csv', index_col=0)
+    try:
 
-    elif uploaded_file is not None:
-        content_type, content_string = uploaded_file.split(',')
-        decoded = base64.b64decode(content_string)
+        # Load the data.
+        if sample_data == ['true']:
+            df = pd.read_csv('data/sample_data.csv', index_col=0)
 
-        if 'csv' in filename:
-            df = pd.read_csv(io.StringIO(decoded.decode('utf-8')), index_col=0)
+        elif uploaded_file is not None:
 
-        elif 'xls' in filename:
-            df = pd.read_excel(io.BytesIO(decoded), index_col=0)
+            try:
+                content_type, content_string = uploaded_file.split(',')
+                decoded = base64.b64decode(content_string)
 
-        elif 'txt' in filename:
-            df = pd.read_csv(io.StringIO(decoded.decode('utf-8')), delimiter=r'\s+', index_col=0)
+                if 'csv' in filename:
+                    df = pd.read_csv(io.StringIO(decoded.decode('utf-8')), index_col=0)
 
-    else:
-        return 4 * [data_error_message]
+                elif 'xls' in filename:
+                    df = pd.read_excel(io.BytesIO(decoded), index_col=0)
 
-    # Drop the missing values.
-    df.dropna(inplace=True)
+                elif 'txt' in filename:
+                    df = pd.read_csv(io.StringIO(decoded.decode('utf-8')), delimiter=r'\s+', index_col=0)
 
-    # Extract the index.
-    index = list(df.index.astype(str))
+                else:
+                    return 4 * [upload_error_message]
 
-    # Extract the data.
-    X = df.values
-
-    # Rescale the data
-    if scaling == 'standard':
-        X = StandardScaler().fit_transform(X)
-
-    elif scaling == 'robust':
-        X = RobustScaler().fit_transform(X)
-
-    elif scaling == 'minmax':
-        X = MinMaxScaler().fit_transform(X)
-
-    elif scaling == 'maxabs':
-        X = MaxAbsScaler().fit_transform(X)
-
-    # Decompose the data.
-    if decomposition == 'true':
-        if n_components < 2 or n_components > X.shape[1] - 1:
-            return 4 * [pca_error_message]
-        else:
-            X = PCA(n_components=np.int(n_components), random_state=0).fit_transform(X)
-
-    # Instantiate the model.
-    if n_clusters < 2 or n_clusters > X.shape[0] - 1:
-        return 4 * [cluster_error_message]
-
-    else:
-
-        if mini_batch == 'false':
-            if algorithm == 'k-means':
-                model = KMeans(init='random', n_clusters=n_clusters, random_state=0)
-            elif algorithm == 'k-means++':
-                model = KMeans(init='k-means++', n_clusters=n_clusters, random_state=0)
+            except:
+                return 4 * [upload_error_message]
 
         else:
-            if batch_size < 2 or batch_size > X.shape[0] - 1:
-                return 4 * [batch_error_message]
+            return 4 * [data_error_message]
+
+        # Drop the missing values.
+        df.dropna(inplace=True)
+
+        # Extract the index.
+        index = list(df.index.astype(str))
+
+        # Extract the data.
+        X = df.values
+
+        # Rescale the data
+        if scaling == 'standard':
+            X = StandardScaler().fit_transform(X)
+
+        elif scaling == 'robust':
+            X = RobustScaler().fit_transform(X)
+
+        elif scaling == 'minmax':
+            X = MinMaxScaler().fit_transform(X)
+
+        elif scaling == 'maxabs':
+            X = MaxAbsScaler().fit_transform(X)
+
+        # Decompose the data.
+        if decomposition == 'true':
+            if n_components < 2 or n_components > X.shape[1] - 1:
+                return 4 * [pca_error_message]
+            else:
+                X = PCA(n_components=np.int(n_components), random_state=0).fit_transform(X)
+
+        # Instantiate the model.
+        if n_clusters < 2 or n_clusters > X.shape[0] - 1:
+            return 4 * [cluster_error_message]
+
+        else:
+
+            if mini_batch == 'false':
+                if algorithm == 'k-means':
+                    kmeans = KMeans(init='random', n_clusters=n_clusters, random_state=0)
+                elif algorithm == 'k-means++':
+                    kmeans = KMeans(init='k-means++', n_clusters=n_clusters, random_state=0)
 
             else:
-                if algorithm == 'k-means':
-                    model = MiniBatchKMeans(init='random', n_clusters=n_clusters, batch_size=batch_size, random_state=0)
-                elif algorithm == 'k-means++':
-                    model = MiniBatchKMeans(init='k-means++', n_clusters=n_clusters, batch_size=batch_size, random_state=0)
+                if batch_size < 2 or batch_size > X.shape[0] - 1:
+                    return 4 * [batch_error_message]
 
-        # Fit the model.
-        results = model.fit(np.double(X))
+                else:
+                    if algorithm == 'k-means':
+                        kmeans = MiniBatchKMeans(init='random', n_clusters=n_clusters, batch_size=batch_size, random_state=0)
+                    elif algorithm == 'k-means++':
+                        kmeans = MiniBatchKMeans(init='k-means++', n_clusters=n_clusters, batch_size=batch_size, random_state=0)
 
-        # Extract the cluster labels.
-        Y = results.labels_
+            # Fit the model.
+            model = kmeans.fit(np.double(X))
 
-        # Extract the number of clusters.
-        N = len(np.unique(Y))
+            # Extract the cluster labels.
+            Y = model.labels_
 
-        # Generate the descriptive statistics table.
-        stats = df.describe()
-        stats.iloc[:1, :] = stats.iloc[:1, :].apply(lambda x: [format(z, ',.0f') for z in x], axis=0)
-        stats.iloc[1:, :] = stats.iloc[1:, :].apply(lambda x: [format(z, ',.3f') for z in x], axis=0)
-        stats.index = ['Count', 'Mean', 'Standard Deviation', 'Minimum', '25th Percentile', 'Median', '75th Percentile', 'Maximum']
-        stats.reset_index(drop=False, inplace=True)
-        stats.rename(columns={'index': ''}, inplace=True)
-        stats = table(stats, height=18, width=44)
+            # Extract the number of clusters.
+            N = len(np.unique(Y))
 
-        # Generate the results table.
-        results = df.copy()
-        results = results.apply(lambda x: [format(z, ',.2f') for z in x], axis=0)
-        results['Record ID'] = index
-        results['Cluster Label'] = Y
-        columns = ['Record ID', 'Cluster Label']
-        columns.extend(df.columns)
-        results = results[columns]
-        results.reset_index(inplace=True, drop=True)
-        results = table(results, height=28, width=30)
+            # Generate the descriptive statistics table.
+            stats = df.describe()
+            stats.iloc[:1, :] = stats.iloc[:1, :].apply(lambda x: [format(z, ',.0f') for z in x], axis=0)
+            stats.iloc[1:, :] = stats.iloc[1:, :].apply(lambda x: [format(z, ',.3f') for z in x], axis=0)
+            stats.index = ['Count', 'Mean', 'Standard Deviation', 'Minimum', '25th Percentile', 'Median', '75th Percentile', 'Maximum']
+            stats.reset_index(drop=False, inplace=True)
+            stats.rename(columns={'index': ''}, inplace=True)
+            stats = table(stats, height=18, width=44)
 
-        # Generate the metrics table.
-        metrics = pd.DataFrame({
-            'Metric': [
-                'Silhouette Coefficient',
-                'Davies-Bouldin Index',
-                'Calinski-Harabasz Index'
-            ],
-            'Value': [
-                format(silhouette_score(X, Y), ',.3f'),
-                format(davies_bouldin_score(X, Y), ',.3f'),
-                format(calinski_harabasz_score(X, Y), ',.0f')
-            ]
-        })
-        metrics = table(metrics, height=6, width=30)
+            # Generate the results table.
+            results = df.copy()
+            results = results.apply(lambda x: [format(z, ',.2f') for z in x], axis=0)
+            results['Record ID'] = index
+            results['Cluster Label'] = Y
+            columns = ['Record ID', 'Cluster Label']
+            columns.extend(df.columns)
+            results = results[columns]
+            results.reset_index(inplace=True, drop=True)
+            results = table(results, height=28, width=30)
 
-        # Reduce the data to 2 dimensions using t-SNE.
-        reduced_data = TSNE(n_components=2, random_state=0).fit_transform(X)
-        reduced_model = model.fit(np.double(reduced_data))
-        Z = reduced_model.labels_
+            # Generate the metrics table.
+            metrics = pd.DataFrame({
+                'Metric': [
+                    'Silhouette Coefficient',
+                    'Davies-Bouldin Index',
+                    'Calinski-Harabasz Index'
+                ],
+                'Value': [
+                    format(silhouette_score(X, Y), ',.3f'),
+                    format(davies_bouldin_score(X, Y), ',.3f'),
+                    format(calinski_harabasz_score(X, Y), ',.0f')
+                ]
+            })
+            metrics = table(metrics, height=6, width=30)
 
-        # Define the meshgrid for the contour plot.
-        x_min, x_max = reduced_data[:, 0].min() - 1, reduced_data[:, 0].max() + 1
-        y_min, y_max = reduced_data[:, 1].min() - 1, reduced_data[:, 1].max() + 1
+            # Reduce the data to 2 dimensions using t-SNE.
+            reduced_data = TSNE(n_components=2, random_state=0).fit_transform(X)
+            reduced_model = kmeans.fit(np.double(reduced_data))
+            Z = reduced_model.labels_
 
-        x = np.linspace(x_min, x_max, 500)
-        y = np.linspace(y_min, y_max, 500)
-        xx, yy = np.meshgrid(x, y)
+            # Define the meshgrid for the contour plot.
+            x_min, x_max = reduced_data[:, 0].min() - 1, reduced_data[:, 0].max() + 1
+            y_min, y_max = reduced_data[:, 1].min() - 1, reduced_data[:, 1].max() + 1
 
-        z = reduced_model.predict(np.c_[xx.ravel(), yy.ravel()])
-        z = z.reshape(xx.shape)
+            x = np.linspace(x_min, x_max, 500)
+            y = np.linspace(y_min, y_max, 500)
+            xx, yy = np.meshgrid(x, y)
 
-        # Get the color palette.
-        p = palette(N)
+            z = reduced_model.predict(np.c_[xx.ravel(), yy.ravel()])
+            z = z.reshape(xx.shape)
 
-        # Define the fill colors for the contour plot.
-        colorscale = [[z / np.max(Z), p[z]] for z in np.unique(Z).tolist()]
+            # Get the color palette.
+            p = palette(N)
 
-        # Define the marker colors for the scatter plot.
-        colors = [p[z] for z in Z.tolist()]
+            # Define the fill colors for the contour plot.
+            colorscale = [[z / np.max(Z), p[z]] for z in np.unique(Z).tolist()]
 
-        # Define the hover text for the scatter plot.
-        text = ['<b>Record No.: </b>' + index[i] + '<br><b>Cluster No.: </b>' + str(Z[i]) for i in range(len(Z))]
+            # Define the marker colors for the scatter plot.
+            colors = [p[z] for z in Z.tolist()]
 
-        # Generate the figure layout.
-        layout = dict(
-            paper_bgcolor='white',
-            plot_bgcolor='white',
-            showlegend=False,
-            margin=dict(t=0, b=0, r=0, l=0),
-            font=dict(family='Open Sans'),
-            xaxis=dict(
-                range=[np.min(x), np.max(x)],
-                visible=False
-            ),
-            yaxis=dict(
-                range=[np.min(y), np.max(y)],
-                visible=False
-            )
-        )
+            # Define the hover text for the scatter plot.
+            text = ['<b>Record No.: </b>' + index[i] + '<br><b>Cluster No.: </b>' + str(Z[i]) for i in range(len(Z))]
 
-        # Generate the figure traces.
-        data = []
-
-        data.append(
-            go.Contour(
-                x=x,
-                y=y,
-                z=z,
-                colorscale=colorscale,
-                opacity=0.25,
-                showscale=False,
-                hoverinfo='none'
-            )
-        )
-
-        data.append(
-            go.Scatter(
-                x=reduced_data[:, 0],
-                y=reduced_data[:, 1],
-                mode='markers',
-                text=text,
-                marker=dict(
-                    color=colors,
-                    size=9,
-                    line=dict(width=1)
+            # Generate the figure layout.
+            layout = dict(
+                paper_bgcolor='white',
+                plot_bgcolor='white',
+                showlegend=False,
+                margin=dict(t=0, b=0, r=0, l=0),
+                font=dict(family='Open Sans'),
+                xaxis=dict(
+                    range=[np.min(x), np.max(x)],
+                    visible=False
                 ),
-                hovertemplate='%{text}<extra></extra>'
+                yaxis=dict(
+                    range=[np.min(y), np.max(y)],
+                    visible=False
+                )
             )
-        )
 
-        # Generate the graph.
-        plot = dcc.Graph(
-            figure=go.Figure(
-                data=data,
-                layout=layout
-            ),
-            style={
-                'height': '22vw',
-                'width': '44vw'
-            },
-            config={
-                'responsive': True,
-                'autosizable': True
-            }
-        )
+            # Generate the figure traces.
+            data = []
 
-    return [stats, results, plot, metrics]
+            data.append(
+                go.Contour(
+                    x=x,
+                    y=y,
+                    z=z,
+                    colorscale=colorscale,
+                    opacity=0.25,
+                    showscale=False,
+                    hoverinfo='none'
+                )
+            )
+
+            data.append(
+                go.Scatter(
+                    x=reduced_data[:, 0],
+                    y=reduced_data[:, 1],
+                    mode='markers',
+                    text=text,
+                    marker=dict(
+                        color=colors,
+                        size=9,
+                        line=dict(width=1)
+                    ),
+                    hovertemplate='%{text}<extra></extra>'
+                )
+            )
+
+            # Generate the graph.
+            plot = dcc.Graph(
+                figure=go.Figure(
+                    data=data,
+                    layout=layout
+                ),
+                style={
+                    'height': '22vw',
+                    'width': '44vw'
+                },
+                config={
+                    'responsive': True,
+                    'autosizable': True
+                }
+            )
+
+        return [stats, results, plot, metrics]
+
+    except:
+
+        raise dash.exceptions.PreventUpdate
 
 if __name__ == '__main__':
     application.run(debug=False, host='127.0.0.1')
