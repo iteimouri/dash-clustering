@@ -33,7 +33,7 @@ flask==2.0.2
 
     ```bash
     git clone https://github.com/flaviagiammarino/dash-clustering
-    cd /dash-clustering/application
+    cd /dash-clustering
     ```
 
 2. Install the requirements.
