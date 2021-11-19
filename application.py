@@ -33,6 +33,7 @@ server = Flask(__name__)
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets, server=server)
 
 app.title = 'Clustering'
+
 app.css.config.serve_locally = True
 app.config.suppress_callback_exceptions = True
 app.scripts.config.serve_locally = True
@@ -665,7 +666,7 @@ def update_results(sample_data,
             )
         )
 
-        # Generate the graph component.
+        # Generate the graph.
         plot = dcc.Graph(
             figure=go.Figure(
                 data=data,
@@ -684,4 +685,4 @@ def update_results(sample_data,
     return [stats, results, plot, metrics]
 
 if __name__ == '__main__':
-    application.run(debug=True, host='127.0.0.1')
+    application.run(debug=False, host='127.0.0.1')

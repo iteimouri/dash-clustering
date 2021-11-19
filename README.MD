@@ -19,7 +19,7 @@ The app was built with Plotly and Dash. For more details, see the [documentation
 ```bash
 pandas==1.2.2
 numpy==1.19.5
-scikit-learn==1.0.1
+scikit_learn==1.0.1
 plotly==5.3.0
 dash==1.21.0
 dash_html_components==1.1.4

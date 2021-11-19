@@ -1,5 +1,5 @@
 /* General */
-body {
+body{
     background-color: white;
     color: #212121;
     font-family: "Open Sans";
@@ -12,13 +12,13 @@ body {
     padding: 0;
 } 
 
-html {
+html{
     color: #212121;
     font-size: 0.85vw;
     overflow-x: hidden;  
 }
 
-a {
+a{
     color: #5D69B1;
     text-decoration: underline;
     cursor: pointer;
@@ -105,4 +105,3 @@ input[type="tel"], input[type="url"], input[type="password"], textarea, select {
     font-family: inherit;
     font-size: 90%;
 }
-
