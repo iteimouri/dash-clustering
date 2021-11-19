@@ -189,6 +189,7 @@ app.layout = html.Div(children=[
                 type='number',
                 min=2,
                 value=3,
+                debounce=True,
                 className='custom-numeric-input'
             ),
 
@@ -242,6 +243,7 @@ app.layout = html.Div(children=[
                 type='number',
                 min=2,
                 value=3,
+                debounce=True,
                 className='custom-numeric-input'
             ),
 
@@ -294,6 +296,7 @@ app.layout = html.Div(children=[
                 type='number',
                 min=2,
                 value=100,
+                debounce=True,
                 className='custom-numeric-input'
             ),
 
@@ -303,7 +306,7 @@ app.layout = html.Div(children=[
             'display': 'inline-block',
             'vertical-align': 'top',
             'width': '20vw',
-            'margin': '0vw 0vw 1vw 2vw'
+            'margin': '1vw 0vw 1vw 2vw'
         }
 
     ),
@@ -347,7 +350,7 @@ app.layout = html.Div(children=[
             'display': 'inline-block',
             'vertical-align': 'top',
             'width': '30vw',
-            'margin': '0vw 0vw 1vw 0vw'
+            'margin': '1vw 0vw 1vw 0vw'
         }
 
     ),
@@ -437,7 +440,7 @@ app.layout = html.Div(children=[
             'display': 'inline-block',
             'vertical-align': 'top',
             'width': '40vw',
-            'margin': '0vw 0vw 1vw 2vw'
+            'margin': '1vw 0vw 1vw 2vw'
         }
 
     ),
