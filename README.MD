@@ -6,6 +6,9 @@ corresponding column headers. This app was built with Plotly and Dash. For more 
 
 ![screenshot.png](screenshot.png)
 
+<br>
+<br>
+
 ### Dependencies
 ```bash
 pandas==1.2.2
