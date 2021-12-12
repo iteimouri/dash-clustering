@@ -6,10 +6,6 @@ corresponding column headers.
 
 ![screenshot.png](screenshot.png)
 
-<br>
-
-<br>
-
 ### Dependencies
 ```bash
 pandas==1.2.2
