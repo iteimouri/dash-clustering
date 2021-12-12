@@ -20,22 +20,4 @@ dash_renderer==1.9.1
 palettable==3.3.0
 flask==2.0.2
 ```
-### Usage
-1. Clone the repository.
 
-    ```bash
-    git clone https://github.com/flaviagiammarino/dash-clustering
-    cd /dash-clustering
-    ```
-
-2. Install the requirements.
-
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-3. Run the app.
-
-    ```bash
-    python application.py
-    ```
