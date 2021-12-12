@@ -32,7 +32,7 @@ server = Flask(__name__)
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets, server=server)
 
-app.title = 'Clustering'
+app.title = 'Cluster Analysis'
 
 app.css.config.serve_locally = True
 app.config.suppress_callback_exceptions = True
