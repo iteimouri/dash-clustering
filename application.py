@@ -48,7 +48,6 @@ app.layout = html.Div(children=[
 
         children=[
 
-            # Data upload.
             html.Label(
                 children='Data',
                 className='custom-label'
@@ -119,7 +118,6 @@ app.layout = html.Div(children=[
                 multiple=False
             ),
 
-            # Feature scaling.
             html.Label(
                 children='Feature Scaling',
                 className='custom-label'
@@ -139,7 +137,6 @@ app.layout = html.Div(children=[
                 labelClassName='custom-select-label'
             ),
 
-            # Principal components analysis.
             html.Label(
                 children='Principal Component Decomposition',
                 className='custom-label'
@@ -193,7 +190,6 @@ app.layout = html.Div(children=[
                 className='custom-numeric-input'
             ),
 
-            # Clustering.
             html.Label(
                 children='Clustering Algorithm',
                 className='custom-label'

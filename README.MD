@@ -2,7 +2,7 @@
 
 This app performs k-means clustering using `scikit-learn`. The user can upload the data in CSV, TXT, XLS or XLSX format. 
 The input file should contain the index in the first column and the features in the subsequent columns, with the
-corresponding column headers. This app was built with Plotly and Dash. For more details, see the [documentation](https://plotly.com/).
+corresponding column headers.
 
 ![screenshot.png](screenshot.png)
 
@@ -17,6 +17,7 @@ dash_html_components==1.1.4
 dash_core_components==1.17.1
 dash_bootstrap_components==0.13.0
 dash_renderer==1.9.1
+palettable==3.3.0
 flask==2.0.2
 ```
 ### Usage
