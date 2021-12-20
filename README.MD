@@ -1,8 +1,6 @@
 ## Plotly Dash Cluster Analysis App
 
-This app performs k-means clustering using `scikit-learn`. The user can upload the data in CSV, TXT, XLS or XLSX format. 
-The input file should contain the index in the first column and the features in the subsequent columns, with the
-corresponding column headers.
+<br>
 
 ![screenshot.png](screenshot.png)
 
